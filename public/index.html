@@ -1,0 +1,28 @@
+<!-- public/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loxone Dashboard</title>
+</head>
+<body>
+    <h1>Loxone Dashboard</h1>
+    <button id="toggleButton">Toggle Light</button>
+    <p id="lightStatus">Light status: unknown</p>
+
+    <script>
+        document.getElementById('toggleButton').addEventListener('click', () => {
+            fetch('/toggle');
+        });
+
+        async function updateStatus() {
+            const response = await fetch('/status');
+            const status = await response.text();
+            document.getElementById('lightStatus').innerText = status;
+        }
+
+        setInterval(updateStatus, 5000); // Update status every 5 seconds
+    </script>
+</body>
+</html>
